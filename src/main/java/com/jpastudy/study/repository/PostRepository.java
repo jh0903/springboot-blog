@@ -1,44 +1,16 @@
 package com.jpastudy.study.repository;
 
 import com.jpastudy.study.domain.Post;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Repository
-public class PostRepository {
+public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @PersistenceContext
-    private EntityManager em;
-
-    public Long save(Post post){
-        em.persist(post);
-        return post.getId();
-    }
-
-    public Post find(Long id){
-        return em.find(Post.class, id);
-    }
-
-    public List<Post> findAll(){
-        return em.createQuery("select p from Post p", Post.class)
-                .getResultList();
-    }
-
-    public void delete(Long id){
-        Post post = em.find(Post.class, id);
-        if(post!=null) {
-            em.remove(post);
-        }
-    }
-
-
-    public List<Post> findBySubject(String subject){
-        return em.createQuery("select p from Post p where p.subject like :subject", Post.class)
-                .setParameter("subject", "%"+subject+"%")
-                .getResultList();
-    }
-
+    Post findBySubject(String subject);
+    Post findBySubjectAndContent(String subject, String content);
+    List<Post> findBySubjectLike(String subject);
+    Page<Post> findAll(Pageable pageable);
 }

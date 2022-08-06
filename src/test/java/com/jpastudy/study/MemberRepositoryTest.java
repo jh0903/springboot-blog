@@ -1,6 +1,5 @@
 package com.jpastudy.study;
 
-import com.jpastudy.study.domain.Comment;
 import com.jpastudy.study.domain.Member;
 import com.jpastudy.study.domain.Post;
 import com.jpastudy.study.repository.CommentRepository;
@@ -16,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -42,20 +40,6 @@ public class MemberRepositoryTest {
     }
 
 
-    @Test
-    @Transactional
-    @Rollback(value = false)
-    public void createComment(){
-        createPost();
-        List<Post> posts = postRepository.findAll();
-        Post post = posts.get(0);
-
-        Comment comment = new Comment();
-        comment.setContent("댓글입니다.");
-        comment.setPost(post);
-        comment.setCreateDate(LocalDateTime.now());
-        commentRepository.save(comment);
-    }
 
     public void createPost(){
         Post post = new Post();
