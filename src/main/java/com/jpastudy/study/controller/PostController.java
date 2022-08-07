@@ -48,7 +48,6 @@ public class PostController {
         if(bindingResult.hasErrors()){
             return "post/createPostForm";
         }
-
         Post post = new Post();
         post.setCreateDate(LocalDateTime.now());
         post.setSubject(form.getSubject());
