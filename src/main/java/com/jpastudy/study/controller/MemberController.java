@@ -3,6 +3,7 @@ package com.jpastudy.study.controller;
 import com.jpastudy.study.domain.MemberCreateForm;
 import com.jpastudy.study.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,10 +35,24 @@ public class MemberController {
                     "비밀번호가 일치하지 않습니다.");
             return "signup_form";
         }
-
-        memberService.create(memberCreateForm.getUsername(), memberCreateForm.getEmail(),
-                memberCreateForm.getPassword1());
-
+        try {
+            memberService.create(memberCreateForm.getUsername(), memberCreateForm.getEmail(),
+                    memberCreateForm.getPassword1());
+        } catch(DataIntegrityViolationException e) {
+            e.printStackTrace();
+            bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
+            return "signup_form";
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            bindingResult.reject("signupFailed", e.getMessage());
+            return "signup_form";
+        }
         return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login_form";
     }
 }
