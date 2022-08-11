@@ -22,6 +22,9 @@ public class Comment {
     @JoinColumn(name="post_id")
     private Post post;
 
+    @ManyToOne
+    private Member author;
+
     public void setPost(Post post){
         System.out.println(post.getId());
         this.post = post;

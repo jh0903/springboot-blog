@@ -28,7 +28,8 @@
     <!-- 댓글 작성 -->
     <form th:action="@{|/comment/create/${post.id}|}" th:object="${commentForm}" method="post" class="my-3">
         <div th:replace="form_errors :: formErrorsFragment"></div>
-        <textarea th:field="*{content}" rows="5" class="form-control"></textarea>
+        <textarea sec:authorize="isAnonymous()" disabled placeholder="로그인 후 작성가능합니다." th:field="*{content}" rows="5" class="form-control"></textarea>
+        <textarea sec:authorize="isAuthenticated()" th:field="*{content}" rows="5" class="form-control"></textarea>
         <input type="submit" value="등록" class="btn btn-primary my-2">
     </form>
     </div>

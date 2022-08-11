@@ -1,6 +1,7 @@
 package com.jpastudy.study.service;
 
 import com.jpastudy.study.DataNotFoundException;
+import com.jpastudy.study.domain.Member;
 import com.jpastudy.study.domain.Post;
 import com.jpastudy.study.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +24,12 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public void savePost(Post post){
+    public void create(String subject, String content, Member member){
+        Post post = new Post();
+        post.setSubject(subject);
+        post.setContent(content);
+        post.setCreateDate(LocalDateTime.now());
+        post.setAuthor(member);
         postRepository.save(post);
     }
 
@@ -42,6 +49,5 @@ public class PostService {
             throw new DataNotFoundException("question not found");
         }
     }
-
 
 }

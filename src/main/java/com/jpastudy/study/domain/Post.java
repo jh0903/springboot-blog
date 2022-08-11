@@ -25,4 +25,7 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
+
+    @ManyToOne
+    private Member author;
 }
