@@ -2,12 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
 <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
 <div layout:fragment="content" class="container my-3">
+    <!-- 게시글 -->
     <h2 class="border-bottom py-2" th:text="${post.subject}">제목</h2>
     <div class="card my-3">
         <div class="card-body">
             <div  class="card-text" style="white-space: pre-line;" th:text="${post.content}">내용</div>
             <div class="d-flex justify-content-end">
                 <div class="badge bg-light text-dark p-2 text-start">
+                    <div class="mb-2">
+                        <span th:if="${post.author != null}" th:text="${post.author.username}"></span>
+                    </div>
                     <div th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
@@ -20,6 +24,9 @@
             <div class="card-text" style="white-space: pre-line;" th:text="${comment.content}"></div>
             <div class="d-flex justify-content-end">
                 <div class="badge bg-light text-dark p-2 text-start">
+                    <div class="mb-2">
+                        <span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
+                    </div>
                     <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
