@@ -50,4 +50,13 @@ public class PostService {
         }
     }
 
+    public void modify(Post post, String subject, String content){
+        post.setSubject(subject);
+        post.setContent(content);
+        postRepository.save(post);
+    }
+
+    public void delete(Post post){
+        postRepository.delete(post);
+    }
 }
